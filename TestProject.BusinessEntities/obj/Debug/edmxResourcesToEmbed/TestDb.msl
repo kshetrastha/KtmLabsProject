@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TestDBModelStoreContainer" CdmEntityContainer="TestDBEntities">
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="TestDBModel.Orders">
+        <MappingFragment StoreEntitySet="Orders">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="SupplyName" ColumnName="SupplyName" />
+          <ScalarProperty Name="UnitCost" ColumnName="UnitCost" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+          <ScalarProperty Name="Markup" ColumnName="Markup" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+          <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="TestDBModel.Users">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+          <ScalarProperty Name="LastActiveTime" ColumnName="LastActiveTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="SpUserIns" FunctionName="TestDBModel.Store.SpUserIns" />
+    <FunctionImportMapping FunctionImportName="SpUserSel" FunctionName="TestDBModel.Store.SpUserSel">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TestDBModel.SpUserSel_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+          <ScalarProperty Name="LastActiveTime" ColumnName="LastActiveTime" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SpUserSelById" FunctionName="TestDBModel.Store.SpUserSelById">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TestDBModel.SpUserSelById_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+          <ScalarProperty Name="LastActiveTime" ColumnName="LastActiveTime" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SpUserUpd" FunctionName="TestDBModel.Store.SpUserUpd" />
+    <FunctionImportMapping FunctionImportName="SpOrderDel" FunctionName="TestDBModel.Store.SpOrderDel" />
+    <FunctionImportMapping FunctionImportName="SpOrderIns" FunctionName="TestDBModel.Store.SpOrderIns" />
+    <FunctionImportMapping FunctionImportName="SpOrderSelbyId" FunctionName="TestDBModel.Store.SpOrderSelbyId">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TestDBModel.SpOrderSelbyId_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="SupplyName" ColumnName="SupplyName" />
+          <ScalarProperty Name="UnitCost" ColumnName="UnitCost" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+          <ScalarProperty Name="Markup" ColumnName="Markup" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+          <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SpOrderUpd" FunctionName="TestDBModel.Store.SpOrderUpd" />
+    <FunctionImportMapping FunctionImportName="SpDropDownlistForUsersel" FunctionName="TestDBModel.Store.SpDropDownlistForUsersel">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TestDBModel.SpDropDownlistForUsersel_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SpOrderSel" FunctionName="TestDBModel.Store.SpOrderSel">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TestDBModel.SpOrderSel_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="SupplyName" ColumnName="SupplyName" />
+          <ScalarProperty Name="UnitCost" ColumnName="UnitCost" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+          <ScalarProperty Name="Markup" ColumnName="Markup" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+          <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SpUserDel" FunctionName="TestDBModel.Store.SpUserDel" />
+  </EntityContainerMapping>
+</Mapping>

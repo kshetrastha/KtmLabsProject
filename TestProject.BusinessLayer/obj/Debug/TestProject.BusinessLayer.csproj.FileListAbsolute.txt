@@ -1,0 +1,14 @@
+E:\TestProject\TestProject\TestProject.BusinessLayer\bin\Debug\TestProject.BusinessLayer.dll.config
+E:\TestProject\TestProject\TestProject.BusinessLayer\bin\Debug\TestProject.BusinessLayer.dll
+E:\TestProject\TestProject\TestProject.BusinessLayer\bin\Debug\TestProject.BusinessLayer.pdb
+E:\TestProject\TestProject\TestProject.BusinessLayer\bin\Debug\EntityFramework.dll
+E:\TestProject\TestProject\TestProject.BusinessLayer\bin\Debug\EntityFramework.SqlServer.dll
+E:\TestProject\TestProject\TestProject.BusinessLayer\bin\Debug\TestProject.BusinessEntities.dll
+E:\TestProject\TestProject\TestProject.BusinessLayer\bin\Debug\TestProject.Model.dll
+E:\TestProject\TestProject\TestProject.BusinessLayer\bin\Debug\TestProject.BusinessEntities.pdb
+E:\TestProject\TestProject\TestProject.BusinessLayer\bin\Debug\TestProject.Model.pdb
+E:\TestProject\TestProject\TestProject.BusinessLayer\bin\Debug\EntityFramework.xml
+E:\TestProject\TestProject\TestProject.BusinessLayer\bin\Debug\EntityFramework.SqlServer.xml
+E:\TestProject\TestProject\TestProject.BusinessLayer\obj\Debug\TestProject.BusinessLayer.csprojResolveAssemblyReference.cache
+E:\TestProject\TestProject\TestProject.BusinessLayer\obj\Debug\TestProject.BusinessLayer.dll
+E:\TestProject\TestProject\TestProject.BusinessLayer\obj\Debug\TestProject.BusinessLayer.pdb

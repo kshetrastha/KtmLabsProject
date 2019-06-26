@@ -1,0 +1,192 @@
+﻿@model TestProject.Model.OrderModel
+@{
+    ViewBag.Title = "CreateOrder";
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="h3 display">List Of Orders </h1>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>SN</th>
+                                    <th>User Name</th>
+                                    <th>Supply Name</th>
+                                    <th>Unit Cost</th>
+                                    <th>Unit Price</th>
+                                    <th>Markup</th>
+                                    <th>Quantity</th>
+                                    <th>Total Price</th>
+                                    <th>Create Time</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="TblOrderDetails"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <header>
+        <h1 class="h3 display">Order Form </h1>
+    </header>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card-body">
+                <form id="OrderForm">
+                    <div class="row">
+                        @Html.HiddenFor(m => m.Id)
+                        <div class="col-lg-3 col-md-3 col-sm-6 form-group">
+                            <label>User Name</label>
+                            <select class="form-control form-control-sm" id="UserId"></select>
+
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-6 form-group">
+                            <label>Supply Name</label>
+                            @Html.EditorFor(model => model.SupplyName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.SupplyName, "", new { @class = "text-danger" })
+
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-6 form-group">
+                            <label>Unit Cost</label>
+                            @Html.EditorFor(model => model.UnitCost, new { htmlAttributes = new { @class = "form-control" } })
+
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-6 form-group">
+                            <label>Unit Price</label>
+                            @Html.EditorFor(model => model.UnitPrice, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.UnitPrice, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-6 form-group">
+                            <label>Markup</label>
+
+                            @Html.EditorFor(model => model.Markup, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Markup, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-6 form-group">
+                            <label> Qyantity</label>
+                            @Html.EditorFor(model => model.Qty, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Qty, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-sm-6 form-group">
+                            <label> Total Price</label>
+                            @Html.EditorFor(model => model.TotalPrice, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.TotalPrice, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-6 form-group">
+                            <button type="button" onclick="SaveOrder()" class="btn btn-primary">Create</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var OrderID = 0;
+    $(function () {
+        loadorderlist()
+    })
+    function SaveOrder() {
+        if ($('#UserId').val() == '-1' || $("#SupplyName").val() == '' || $("#UnitCost").val() == '' || $("#UnitPrice").val() == '' || $("#Markup").val() == '' || $("#Qty").val() == '' || $("#TotalPrice").val() == '') {
+            toastr.warning('Values Cannot be null', 'Warning');
+            return;
+        } else {
+            var model = {
+                Id: OrderID,
+                UserId: $("#UserId").val(),
+                SupplyName: $("#SupplyName").val(),
+                UnitCost: $("#UnitCost").val(),
+                UnitPrice: $("#UnitPrice").val(),
+                Markup: $("#Markup").val(),
+                Qty: $("#Qty").val(),
+                TotalPrice: $("#TotalPrice").val()
+            }
+            $.ajax({
+                url: "@Url.Action("CreateOrder", "User")",
+                data: JSON.stringify(model),
+                type: 'Post',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'JSON',
+                success: function (response) {
+                    $("#OrderForm").trigger('reset');
+                    OrderID = 0;
+                    loadorderlist()
+                    toastr.success(response.ReturnMessage, 'Success')
+                }
+            })
+        }
+    }
+    $(function () {
+        $("#UserId").empty()
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("DropDownlistUser","User")",
+            success: function (data) {
+                var s = '<option value="-1">Select a User Name</option>';
+                for (var i = 0; i < data.length; i++) {
+                    s += '<option value="' + data[i].Id + '">' + data[i].UserName + '</option>';
+                }
+                $("#UserId").html(s);
+            }
+        });
+    });
+    function EditUser(Id) {
+        $.ajax({
+            url: '@Url.Action("GetOrderbyOrderrId","User")',
+            type: 'Get',
+            data: { id: Id },
+            success: function (response) {
+                OrderID = response[0].Id;
+                $("#UserId").val(response[0].UserId),
+                $("#SupplyName").val(response[0].SupplyName),
+                $("#UnitCost").val(response[0].UnitCost),
+                $("#UnitPrice").val(response[0].UnitCost),
+                $("#Markup").val(response[0].Markup),
+                $("#Qty").val(response[0].Qty),
+                $("#TotalPrice").val(response[0].TotalPrice)
+            }
+        })
+    }
+    function DeleteUser(Id) {
+        if (window.confirm("Are You Sure! Do you want to delete !")) {
+            $.ajax({
+                url: '@Url.Action("DeleteOrder", "User")',
+                type: 'Post',
+                data: { id: Id },
+                success: function (response) {
+                    loadorderlist();
+                    toastr.success(response.ReturnMessage, 'Success')
+                }
+            })
+        }
+    }
+    function loadorderlist() {
+        $("#TblOrderDetails").empty();
+        $.ajax({
+            url: "@Url.Action("Orderlist", "User")",
+            type: 'Get',
+            success: function (msg) {
+                var i = 1;
+                $.each(msg, function (index, obj) {
+                    obj.Sn = i++;
+                    obj.Edit = "Edit"
+                    obj.Delete = "Delete"
+                    var row = '<tr><td>' + obj.Sn + '</td><td>' + obj.UserName + '</td><td>' + obj.SupplyName + '</td><td>' + obj.UnitCost + '</td><td>' + obj.UnitPrice + '</td><td>' + obj.Markup + '</td><td>' + obj.Qty + '</td><td>' + obj.TotalPrice + '</td><td>' + new Date(obj.CreateTime.match(/\d+/) * 1).toLocaleDateString() + '</td><td> <button type="button" id="btnEdit" class="btn btn-info btn-sm" onClick="EditUser(' + obj.Id + ')">' + obj.Edit + '</button> <button type="button" id="btnDel" class="btn btn-info btn-sm" onClick="DeleteUser(' + obj.Id + ')">' + obj.Delete + '</button> </tr>'
+                    $("#TblOrderDetails").append(row);
+                });
+            }
+        })
+    }
+</script>

@@ -1,0 +1,352 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TestDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="SupplyName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UnitCost" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="UnitPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Markup" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Qty" Type="int" Nullable="false" />
+          <Property Name="TotalPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+          <Property Name="LastActiveTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Orders_Users_UserId">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="SpDropDownlistForUsersel" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SpOrderDel" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
+          <Parameter Name="ReturnMessage" Type="varchar" Mode="InOut" />
+        </Function>
+        <Function Name="SpOrderIns" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserId" Type="int" Mode="In" />
+          <Parameter Name="SupplyName" Type="nvarchar" Mode="In" />
+          <Parameter Name="UnitCost" Type="decimal" Mode="In" />
+          <Parameter Name="UnitPrice" Type="decimal" Mode="In" />
+          <Parameter Name="Markup" Type="decimal" Mode="In" />
+          <Parameter Name="Qty" Type="int" Mode="In" />
+          <Parameter Name="TotalPrice" Type="decimal" Mode="In" />
+          <Parameter Name="ReturnMessage" Type="varchar" Mode="InOut" />
+        </Function>
+        <Function Name="SpOrderSel" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SpOrderSelbyId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SpOrderUpd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
+          <Parameter Name="UserId" Type="int" Mode="In" />
+          <Parameter Name="SupplyName" Type="nvarchar" Mode="In" />
+          <Parameter Name="UnitCost" Type="decimal" Mode="In" />
+          <Parameter Name="UnitPrice" Type="decimal" Mode="In" />
+          <Parameter Name="Markup" Type="decimal" Mode="In" />
+          <Parameter Name="Qty" Type="int" Mode="In" />
+          <Parameter Name="TotalPrice" Type="decimal" Mode="In" />
+          <Parameter Name="ReturnMessage" Type="varchar" Mode="InOut" />
+        </Function>
+        <Function Name="SpUserDel" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
+          <Parameter Name="ReturnMessage" Type="varchar" Mode="InOut" />
+        </Function>
+        <Function Name="SpUserIns" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserName" Type="nvarchar" Mode="In" />
+          <Parameter Name="ReturnMessage" Type="varchar" Mode="InOut" />
+        </Function>
+        <Function Name="SpUserSel" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SpUserSelById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SpUserUpd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
+          <Parameter Name="UserName" Type="nvarchar" Mode="In" />
+          <Parameter Name="ReturnMessage" Type="varchar" Mode="InOut" />
+        </Function>
+        <EntityContainer Name="TestDBModelStoreContainer">
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Orders_Users_UserId" Association="Self.FK_Orders_Users_UserId">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TestDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="SupplyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UnitCost" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="UnitPrice" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Markup" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Qty" Type="Int32" Nullable="false" />
+          <Property Name="TotalPrice" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Orders_Users_UserId" FromRole="Orders" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastActiveTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Users_UserId" FromRole="Users" ToRole="Orders" />
+        </EntityType>
+        <Association Name="FK_Orders_Users_UserId">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TestDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Orders" EntityType="Self.Orders" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK_Orders_Users_UserId" Association="Self.FK_Orders_Users_UserId">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <FunctionImport Name="SpUserIns">
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="ReturnMessage" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SpUserSel" ReturnType="Collection(TestDBModel.SpUserSel_Result)" />
+          <FunctionImport Name="SpUserSelById" ReturnType="Collection(TestDBModel.SpUserSelById_Result)">
+          <Parameter Name="Id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SpUserUpd">
+            <Parameter Name="Id" Mode="In" Type="Int32" />
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="ReturnMessage" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SpOrderDel">
+            <Parameter Name="Id" Mode="In" Type="Int32" />
+            <Parameter Name="ReturnMessage" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SpOrderIns">
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+            <Parameter Name="SupplyName" Mode="In" Type="String" />
+            <Parameter Name="UnitCost" Mode="In" Type="Decimal" />
+            <Parameter Name="UnitPrice" Mode="In" Type="Decimal" />
+            <Parameter Name="Markup" Mode="In" Type="Decimal" />
+            <Parameter Name="Qty" Mode="In" Type="Int32" />
+            <Parameter Name="TotalPrice" Mode="In" Type="Decimal" />
+            <Parameter Name="ReturnMessage" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SpOrderSelbyId" ReturnType="Collection(TestDBModel.SpOrderSelbyId_Result)">
+          <Parameter Name="Id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SpOrderUpd">
+            <Parameter Name="Id" Mode="In" Type="Int32" />
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+            <Parameter Name="SupplyName" Mode="In" Type="String" />
+            <Parameter Name="UnitCost" Mode="In" Type="Decimal" />
+            <Parameter Name="UnitPrice" Mode="In" Type="Decimal" />
+            <Parameter Name="Markup" Mode="In" Type="Decimal" />
+            <Parameter Name="Qty" Mode="In" Type="Int32" />
+            <Parameter Name="TotalPrice" Mode="In" Type="Decimal" />
+            <Parameter Name="ReturnMessage" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SpDropDownlistForUsersel" ReturnType="Collection(TestDBModel.SpDropDownlistForUsersel_Result)" />
+          <FunctionImport Name="SpOrderSel" ReturnType="Collection(TestDBModel.SpOrderSel_Result)" />
+          <FunctionImport Name="SpUserDel">
+            <Parameter Name="Id" Mode="In" Type="Int32" />
+            <Parameter Name="ReturnMessage" Mode="InOut" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="SpUserSel_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="CreateTime" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="LastActiveTime" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="SpUserSelById_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="CreateTime" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="LastActiveTime" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="SpOrderSelbyId_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <Property Type="String" Name="SupplyName" Nullable="false" MaxLength="50" />
+          <Property Type="Decimal" Name="UnitCost" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="UnitPrice" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Markup" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Int32" Name="Qty" Nullable="false" />
+          <Property Type="Decimal" Name="TotalPrice" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="DateTime" Name="CreateTime" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="SpDropDownlistForUsersel_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="SpOrderSel_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <Property Type="String" Name="SupplyName" Nullable="false" MaxLength="50" />
+          <Property Type="Decimal" Name="UnitCost" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="UnitPrice" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Markup" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Int32" Name="Qty" Nullable="false" />
+          <Property Type="Decimal" Name="TotalPrice" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="DateTime" Name="CreateTime" Nullable="false" Precision="23" />
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="50" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TestDBModelStoreContainer" CdmEntityContainer="TestDBEntities">
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="TestDBModel.Orders">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="SupplyName" ColumnName="SupplyName" />
+                <ScalarProperty Name="UnitCost" ColumnName="UnitCost" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="Markup" ColumnName="Markup" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="TestDBModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="LastActiveTime" ColumnName="LastActiveTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SpUserIns" FunctionName="TestDBModel.Store.SpUserIns" />
+          <FunctionImportMapping FunctionImportName="SpUserSel" FunctionName="TestDBModel.Store.SpUserSel">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TestDBModel.SpUserSel_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="LastActiveTime" ColumnName="LastActiveTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SpUserSelById" FunctionName="TestDBModel.Store.SpUserSelById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TestDBModel.SpUserSelById_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="LastActiveTime" ColumnName="LastActiveTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SpUserUpd" FunctionName="TestDBModel.Store.SpUserUpd" />
+          <FunctionImportMapping FunctionImportName="SpOrderDel" FunctionName="TestDBModel.Store.SpOrderDel" />
+          <FunctionImportMapping FunctionImportName="SpOrderIns" FunctionName="TestDBModel.Store.SpOrderIns" />
+          <FunctionImportMapping FunctionImportName="SpOrderSelbyId" FunctionName="TestDBModel.Store.SpOrderSelbyId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TestDBModel.SpOrderSelbyId_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="SupplyName" ColumnName="SupplyName" />
+                <ScalarProperty Name="UnitCost" ColumnName="UnitCost" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="Markup" ColumnName="Markup" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SpOrderUpd" FunctionName="TestDBModel.Store.SpOrderUpd" />
+          <FunctionImportMapping FunctionImportName="SpDropDownlistForUsersel" FunctionName="TestDBModel.Store.SpDropDownlistForUsersel">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TestDBModel.SpDropDownlistForUsersel_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SpOrderSel" FunctionName="TestDBModel.Store.SpOrderSel">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TestDBModel.SpOrderSel_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="SupplyName" ColumnName="SupplyName" />
+                <ScalarProperty Name="UnitCost" ColumnName="UnitCost" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="Markup" ColumnName="Markup" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SpUserDel" FunctionName="TestDBModel.Store.SpUserDel" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

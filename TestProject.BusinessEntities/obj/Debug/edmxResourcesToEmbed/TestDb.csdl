@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TestDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="SupplyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UnitCost" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="UnitPrice" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Markup" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Qty" Type="Int32" Nullable="false" />
+    <Property Name="TotalPrice" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_Orders_Users_UserId" FromRole="Orders" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="LastActiveTime" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Users_UserId" FromRole="Users" ToRole="Orders" />
+  </EntityType>
+  <Association Name="FK_Orders_Users_UserId">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TestDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Orders" EntityType="Self.Orders" />
+    <EntitySet Name="Users" EntityType="Self.Users" />
+    <AssociationSet Name="FK_Orders_Users_UserId" Association="Self.FK_Orders_Users_UserId">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <FunctionImport Name="SpUserIns">
+      <Parameter Name="UserName" Mode="In" Type="String" />
+      <Parameter Name="ReturnMessage" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SpUserSel" ReturnType="Collection(TestDBModel.SpUserSel_Result)" />
+    <FunctionImport Name="SpUserSelById" ReturnType="Collection(TestDBModel.SpUserSelById_Result)">
+      <Parameter Name="Id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SpUserUpd">
+      <Parameter Name="Id" Mode="In" Type="Int32" />
+      <Parameter Name="UserName" Mode="In" Type="String" />
+      <Parameter Name="ReturnMessage" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SpOrderDel">
+      <Parameter Name="Id" Mode="In" Type="Int32" />
+      <Parameter Name="ReturnMessage" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SpOrderIns">
+      <Parameter Name="UserId" Mode="In" Type="Int32" />
+      <Parameter Name="SupplyName" Mode="In" Type="String" />
+      <Parameter Name="UnitCost" Mode="In" Type="Decimal" />
+      <Parameter Name="UnitPrice" Mode="In" Type="Decimal" />
+      <Parameter Name="Markup" Mode="In" Type="Decimal" />
+      <Parameter Name="Qty" Mode="In" Type="Int32" />
+      <Parameter Name="TotalPrice" Mode="In" Type="Decimal" />
+      <Parameter Name="ReturnMessage" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SpOrderSelbyId" ReturnType="Collection(TestDBModel.SpOrderSelbyId_Result)">
+      <Parameter Name="Id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SpOrderUpd">
+      <Parameter Name="Id" Mode="In" Type="Int32" />
+      <Parameter Name="UserId" Mode="In" Type="Int32" />
+      <Parameter Name="SupplyName" Mode="In" Type="String" />
+      <Parameter Name="UnitCost" Mode="In" Type="Decimal" />
+      <Parameter Name="UnitPrice" Mode="In" Type="Decimal" />
+      <Parameter Name="Markup" Mode="In" Type="Decimal" />
+      <Parameter Name="Qty" Mode="In" Type="Int32" />
+      <Parameter Name="TotalPrice" Mode="In" Type="Decimal" />
+      <Parameter Name="ReturnMessage" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SpDropDownlistForUsersel" ReturnType="Collection(TestDBModel.SpDropDownlistForUsersel_Result)" />
+    <FunctionImport Name="SpOrderSel" ReturnType="Collection(TestDBModel.SpOrderSel_Result)" />
+    <FunctionImport Name="SpUserDel">
+      <Parameter Name="Id" Mode="In" Type="Int32" />
+      <Parameter Name="ReturnMessage" Mode="InOut" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="SpUserSel_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="String" Name="UserName" Nullable="false" MaxLength="50" />
+    <Property Type="DateTime" Name="CreateTime" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="LastActiveTime" Nullable="false" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="SpUserSelById_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="String" Name="UserName" Nullable="false" MaxLength="50" />
+    <Property Type="DateTime" Name="CreateTime" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="LastActiveTime" Nullable="false" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="SpOrderSelbyId_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="Int32" Name="UserId" Nullable="false" />
+    <Property Type="String" Name="SupplyName" Nullable="false" MaxLength="50" />
+    <Property Type="Decimal" Name="UnitCost" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="UnitPrice" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="Markup" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Int32" Name="Qty" Nullable="false" />
+    <Property Type="Decimal" Name="TotalPrice" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="DateTime" Name="CreateTime" Nullable="false" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="SpDropDownlistForUsersel_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="String" Name="UserName" Nullable="false" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="SpOrderSel_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="Int32" Name="UserId" Nullable="false" />
+    <Property Type="String" Name="SupplyName" Nullable="false" MaxLength="50" />
+    <Property Type="Decimal" Name="UnitCost" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="UnitPrice" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="Markup" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Int32" Name="Qty" Nullable="false" />
+    <Property Type="Decimal" Name="TotalPrice" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="DateTime" Name="CreateTime" Nullable="false" Precision="23" />
+    <Property Type="String" Name="UserName" Nullable="false" MaxLength="50" />
+  </ComplexType>
+</Schema>

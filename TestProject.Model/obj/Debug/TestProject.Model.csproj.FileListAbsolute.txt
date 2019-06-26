@@ -1,0 +1,10 @@
+E:\TestProject\TestProject\TestProject.Model\bin\Debug\TestProject.Model.dll.config
+E:\TestProject\TestProject\TestProject.Model\bin\Debug\TestProject.Model.dll
+E:\TestProject\TestProject\TestProject.Model\bin\Debug\TestProject.Model.pdb
+E:\TestProject\TestProject\TestProject.Model\bin\Debug\EntityFramework.dll
+E:\TestProject\TestProject\TestProject.Model\bin\Debug\EntityFramework.SqlServer.dll
+E:\TestProject\TestProject\TestProject.Model\bin\Debug\EntityFramework.xml
+E:\TestProject\TestProject\TestProject.Model\bin\Debug\EntityFramework.SqlServer.xml
+E:\TestProject\TestProject\TestProject.Model\obj\Debug\TestProject.Model.csprojResolveAssemblyReference.cache
+E:\TestProject\TestProject\TestProject.Model\obj\Debug\TestProject.Model.dll
+E:\TestProject\TestProject\TestProject.Model\obj\Debug\TestProject.Model.pdb

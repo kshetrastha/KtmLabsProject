@@ -1,0 +1,149 @@
+﻿@model TestProject.Model.UserModel
+@{
+    ViewBag.Title = "CreateUser";
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="h3 display">List Of Users </h1>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>SN</th>
+                                    <th>User Name</th>
+                                    <th>Create Time</th>
+                                    <th>Last Active Time</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="UserDetails"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <header>
+        <h1 class="h3 display">Order Form </h1>
+    </header>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card-body">
+                <form id="OrderForm">
+                    <div class="row">
+                        @Html.HiddenFor(m => m.Id)
+                        <div class="col-lg-3 col-md-3 col-sm-6 form-group">
+                            <label>User Name</label>
+                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-6 form-group">
+                            <button type="button" onclick="SaveUser()" class="btn btn-primary">Create</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var userId = 0;
+    $(function () {
+        loadData();
+    })
+    function SaveUser() {
+        if ($('#UserName').val() == '') {
+            toastr.warning('UserName Cannot be null', 'Warning');
+            return;
+        }
+        else {
+            var model = {
+                Id: userId,
+                UserName: $('#UserName').val()
+            }
+            $.ajax({
+                url: "@Url.Action("CreateUser", "User")",
+                data: JSON.stringify(model),
+                type: 'POST',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'JSON',
+                success: function (response) {
+                    $("#UserDetails").empty();
+                    $('#UserName').val('');
+                    userId = 0;
+                    if (response.ReturnMessage == 'Saved Successfully' || response.ReturnMessage == 'Updated Successfully') {
+                        loadData();
+                        toastr.success(response.ReturnMessage, 'Success');
+                    }
+                    else if (response.ReturnMessage == "Username already exists.") {
+                        loadData();
+                        toastr.warning(response.ReturnMessage, 'Warning');
+                    }
+                    else {
+                        toastr.warning(response.ReturnMessage, 'Warning');
+                    }
+                }
+            })
+        }
+    }
+    function EditUser(Id) {
+        $.ajax({
+            url: '@Url.Action("GetUserbyUserId","User")',
+            type: 'Get',
+            data: { id: Id },
+            success: function (response) {
+
+                userId = response[0].Id;
+                $('#UserName').val(response[0].UserName)
+            }
+        })
+    }
+    function DeleteUser(Id) {
+        if (window.confirm("Are You Sure! Do you want to delete !")) {
+            $.ajax({
+
+                url: '@Url.Action("DeleteUser", "User")',
+                type: 'Post',
+                data: { id: Id },
+                success: function (response) {
+
+                    if (response.ReturnMessage == 'User is Used by another table') {
+                        toastr.warning(response.ReturnMessage, 'Warning')
+                    } else {
+                        loadData();
+                        toastr.success(response.ReturnMessage, 'Success')
+                    }
+
+                }
+            })
+        }
+    }
+    function loadData() {
+        $("#UserDetails").empty();
+        $.ajax({
+            url: "@Url.Action("UserList", "User")",
+            type: 'Get',
+            success: function (msg) {
+
+                var i = 1;
+                $.each(msg, function (index, obj) {
+                    obj.Sn = i++;
+                    obj.Edit = "Edit"
+                    obj.Delete = "Delete"
+                    var row = '<tr><td>' + obj.Sn + '</td><td>' + obj.UserName + '</td><td>' + new Date(obj.CreateTime.match(/\d+/) * 1).toLocaleDateString() + '</td><td>' + new Date(obj.LastActiveTime.match(/\d+/) * 1).toLocaleDateString() + '</td><td> <button type="button" id="btnEdit" class="btn btn-info btn-sm" onClick="EditUser(' + obj.Id + ')">' + obj.Edit + '</button>  <button type="button" id="btnDel" class="btn btn-info btn-sm" onClick="DeleteUser(' + obj.Id + ')">' + obj.Delete + '</button> </tr>'
+                    $("#UserDetails").append(row);
+                });
+            }
+        })
+    }
+</script>
